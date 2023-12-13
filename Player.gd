@@ -1,13 +1,13 @@
 extends Area2D
 
+signal hit
+
 @export var speed = 400
 
 
 
 func _ready():
 	pass # Replace with function body.
-
-
 
 func _process(delta):
 	var velocity = Vector2.ZERO
@@ -25,3 +25,10 @@ func _process(delta):
 		velocity = velocity.normalized() * speed
 	
 	position += velocity * delta
+
+
+func _on_body_entered(body):
+	hide()
+	hit.emit()
+	
+	$CollisionShape2D.set_deferred("disabled", true)
